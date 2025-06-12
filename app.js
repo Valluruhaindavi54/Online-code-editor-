@@ -1,0 +1,69 @@
+import React, { useState, useEffect } from "react";
+import MonacoEditor from "react-monaco-editor";
+
+const defaultHTML = "<h1>Hello World</h1>";
+const defaultCSS = "h1 { color: purple; }";
+const defaultJS = "console.log('Hello from JS');";
+
+export default function App() {
+  const [html, setHtml] = useState(defaultHTML);
+    const [css, setCss] = useState(defaultCSS);
+      const [js, setJs] = useState(defaultJS);
+        const [srcDoc, setSrcDoc] = useState("");
+
+          useEffect(() => {
+              const timeout = setTimeout(() => {
+                    setSrcDoc(`
+                            <html>
+                                      <head>
+                                                  <style>${css}</style>
+                                                            </head>
+                                                                      <body>
+                                                                                  ${html}
+                                                                                              <script>${js}<\/script>
+                                                                                                        </body>
+                                                                                                                </html>
+                                                                                                                      `);
+                                                                                                                          }, 300);
+
+                                                                                                                              return () => clearTimeout(timeout);
+                                                                                                                                }, [html, css, js]);
+
+                                                                                                                                  return (
+                                                                                                                                      <div style={{ display: "flex", height: "100vh" }}>
+                                                                                                                                            <div style={{ width: "50%", display: "flex", flexDirection: "column" }}>
+                                                                                                                                                    <MonacoEditor
+                                                                                                                                                              language="html"
+                                                                                                                                                                        theme="vs-dark"
+                                                                                                                                                                                  value={html}
+                                                                                                                                                                                            onChange={setHtml}
+                                                                                                                                                                                                      height="33%"
+                                                                                                                                                                                                                options={{ minimap: { enabled: false } }}
+                                                                                                                                                                                                                        />
+                                                                                                                                                                                                                                <MonacoEditor
+                                                                                                                                                                                                                                          language="css"
+                                                                                                                                                                                                                                                    theme="vs-dark"
+                                                                                                                                                                                                                                                              value={css}
+                                                                                                                                                                                                                                                                        onChange={setCss}
+                                                                                                                                                                                                                                                                                  height="33%"
+                                                                                                                                                                                                                                                                                            options={{ minimap: { enabled: false } }}
+                                                                                                                                                                                                                                                                                                    />
+                                                                                                                                                                                                                                                                                                            <MonacoEditor
+                                                                                                                                                                                                                                                                                                                      language="javascript"
+                                                                                                                                                                                                                                                                                                                                theme="vs-dark"
+                                                                                                                                                                                                                                                                                                                                          value={js}
+                                                                                                                                                                                                                                                                                                                                                    onChange={setJs}
+                                                                                                                                                                                                                                                                                                                                                              height="34%"
+                                                                                                                                                                                                                                                                                                                                                                        options={{ minimap: { enabled: false } }}
+                                                                                                                                                                                                                                                                                                                                                                                />
+                                                                                                                                                                                                                                                                                                                                                                                      </div>
+                                                                                                                                                                                                                                                                                                                                                                                            <iframe
+                                                                                                                                                                                                                                                                                                                                                                                                    srcDoc={srcDoc}
+                                                                                                                                                                                                                                                                                                                                                                                                            title="Live Preview"
+                                                                                                                                                                                                                                                                                                                                                                                                                    sandbox="allow-scripts"
+                                                                                                                                                                                                                                                                                                                                                                                                                            frameBorder="0"
+                                                                                                                                                                                                                                                                                                                                                                                                                                    style={{ width: "50%", height: "100%" }}
+                                                                                                                                                                                                                                                                                                                                                                                                                                          />
+                                                                                                                                                                                                                                                                                                                                                                                                                                              </div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                );
+                                                                                                                                                                                                                                                                                                                                                                                                                                                }
